@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +34,17 @@ namespace TimeScheduler
             BaseStatesStore.Init(DEFAULT_WORK_STATE);
             _timerService = new TimerService();
             _timerService.Add(onTimerTick, onTimerRestart);
+            Init();
+    }
+
+        private void Init()
+        {
+            ObservableCollection<string> list = new ObservableCollection<string>();
+            foreach (var lang in App.Languages)
+            {
+                list.Add(lang.DisplayName);
+            }
+            languageSelector.ItemsSource = list;
         }
 
         private void onStart(object sender, RoutedEventArgs e)
@@ -55,16 +68,16 @@ namespace TimeScheduler
 
         private void workTimelapseSetter_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
         {
-            if (restTimelapseSetter != null)
+            if (restTimelapseSetter != null && e.NewValue != null)
             {
-                restTimelapseSetter.Minimum = (double)e.NewValue * 0.2;
+                restTimelapseSetter.Minimum = Math.Ceiling((double)e.NewValue * 0.2);
                 onValueChanged((long) e.NewValue, (long) restTimelapseSetter.Value);
             }
         }
 
         private void restTimelapseSetter_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
         {
-            if (workTimelapseSetter != null)
+            if (workTimelapseSetter != null && e.NewValue != null)
             {
                 onValueChanged((long) workTimelapseSetter.Value, (long) e.NewValue);
             }

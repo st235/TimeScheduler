@@ -6,20 +6,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TimeScheduler"
         mc:Ignorable="d"
-        Title="MainWindow"
+        Title="{DynamicResource AppTitle}"
         Height="350" Width="525"
         GlowBrush="{DynamicResource AccentColorBrush}"
         WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+    <Controls:MetroWindow.RightWindowCommands>
+        <Controls:WindowCommands ShowLastSeparator="False" Foreground="White" Background="{x:Null}">
+            <Controls:DropDownButton Name="languageSelector" />
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.RightWindowCommands>
 
-        <Controls:NumericUpDown Name="workTimelapseSetter" Interval="5" Minimum="0" Value="0" Maximum="80" ValueChanged="workTimelapseSetter_ValueChanged" StringFormat="N4" VerticalAlignment="Center" Margin="0,48,0,247"/>
-        <Controls:NumericUpDown Name="restTimelapseSetter" Interval="5" Minimum="0" Value="0" Maximum="80" ValueChanged="restTimelapseSetter_ValueChanged" StringFormat="N4" VerticalAlignment="Center" Margin="0,79,0,216"/>
-        <Controls:MetroProgressBar Name="timerTickProgress" Foreground="{DynamicResource AccentColorBrush}" Grid.ColumnSpan="2" Margin="0,0,0,-3" VerticalAlignment="Bottom" />
-        <Button Name="timerStartButton" Content="Button" Click="onStart" IsEnabled="False" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Margin="78,150,0,0" VerticalAlignment="Top" Width="75"/>
-    </Grid>
+    <Controls:MetroContentControl>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Controls:NumericUpDown Name="workTimelapseSetter" Interval="5" Minimum="0" Value="0" Maximum="80" ValueChanged="workTimelapseSetter_ValueChanged" StringFormat="N0" VerticalAlignment="Center" Margin="0,48,0,247"/>
+            <Controls:NumericUpDown Name="restTimelapseSetter" Interval="5" Minimum="0" Value="0" Maximum="80" ValueChanged="restTimelapseSetter_ValueChanged" StringFormat="N0" VerticalAlignment="Center" Margin="0,79,0,216"/>
+            <Controls:MetroProgressBar Name="timerTickProgress" Foreground="{DynamicResource AccentColorBrush}" Grid.ColumnSpan="2" Margin="0,0,0,-3" VerticalAlignment="Bottom" />
+            <Button Name="timerStartButton" Content="Button" Click="onStart" IsEnabled="False" Style="{StaticResource AccentedSquareButtonStyle}" HorizontalAlignment="Left" Margin="78,150,0,0" VerticalAlignment="Top" Width="75"/>
+        </Grid>
+    </Controls:MetroContentControl>
 </Controls:MetroWindow>
