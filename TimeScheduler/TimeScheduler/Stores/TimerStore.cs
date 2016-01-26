@@ -4,34 +4,31 @@ namespace TimeScheduler.Stores
 {
     public class TimerStore
     {
-        private static long WORK_TIMELAPSE, REST_TIMELPASE;
-        private static int TICK_INTERVAL = 1;
+        private static long _workTimelapse, _restTimelpase;
+        private const int _tickInterval = 1;
 
         public static long Timelapse
         {
             get
             {
-                if (BaseStatesStore.IsWork) return WORK_TIMELAPSE;
-                return REST_TIMELPASE;
+                if (BaseStatesStore.IsWork) return _workTimelapse;
+                return _restTimelpase;
             }
             set 
             {
-                if (BaseStatesStore.IsWork) WORK_TIMELAPSE = value;
-                else REST_TIMELPASE = value;
+                if (BaseStatesStore.IsWork) _workTimelapse = value;
+                else _restTimelpase = value;
             }
         }
 
-        public static int TickInterval
-        {
-            get { return TICK_INTERVAL; }
-        }
+        public static int TickInterval => _tickInterval;
 
         private TimerStore() { }
 
         public static void Set(long workTimelapse, long restTimelapse)
         {
-            WORK_TIMELAPSE = TimeConverter.toSeconds(workTimelapse);
-            REST_TIMELPASE = TimeConverter.toSeconds(restTimelapse);
+            _workTimelapse = TimeConverter.ToSeconds(workTimelapse);
+            _restTimelpase = TimeConverter.ToSeconds(restTimelapse);
         }
     }
 }

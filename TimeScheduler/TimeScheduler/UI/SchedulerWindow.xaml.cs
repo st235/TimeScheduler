@@ -1,39 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using TimeScheduler.Services;
 using TimeScheduler.Stores;
-using TimeScheduler.Utils;
 
 namespace TimeScheduler
 {
 
     public partial class MainWindow : MetroWindow
     {
-        private bool DEFAULT_WORK_STATE = true;
+        private bool _defaultWorkState = true;
 
-        private TimerService _timerService = null;
+        private readonly TimerService _timerService = null;
 
         public MainWindow()
         {
             InitializeComponent();
-            BaseStatesStore.Init(DEFAULT_WORK_STATE);
+            BaseStatesStore.Init(_defaultWorkState);
             _timerService = new TimerService();
-            _timerService.Add(onTimerTick, onTimerRestart);
+            _timerService.Add(OnTimerTick, OnTimerRestart);
             Init();
     }
 
@@ -44,51 +30,56 @@ namespace TimeScheduler
             {
                 list.Add(lang.DisplayName);
             }
-            languageSelector.ItemsSource = list;
+            NavLanguageSelector.ItemsSource = list;
         }
 
-        private void onStart(object sender, RoutedEventArgs e)
+        private void OnStart(object sender, RoutedEventArgs e)
         {
-            timerTickProgress.Maximum = TimerStore.Timelapse;
+            TimerTickProgress.Maximum = TimerStore.Timelapse;
             _timerService.Set(TimerStore.Timelapse, TimerStore.TickInterval);
             _timerService.Start();
         }
 
-        public void onTimerTick(long allTime, long currentTime)
+        public void OnTimerTick(long allTime, long currentTime)
         {
-            timerTickProgress.Value = currentTime;
+            TimerTickProgress.Value = currentTime;
         }
 
-        public void onTimerRestart()
+        public void OnTimerRestart()
         {
             BaseStatesStore.Revert();
             _timerService.Set(TimerStore.Timelapse, TimerStore.TickInterval);
-            timerTickProgress.Maximum = TimerStore.Timelapse;
+            TimerTickProgress.Maximum = TimerStore.Timelapse;
         }
 
         private void workTimelapseSetter_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
         {
-            if (restTimelapseSetter != null && e.NewValue != null)
+            if (RestTimelapseSetter != null && e.NewValue != null)
             {
-                restTimelapseSetter.Minimum = Math.Ceiling((double)e.NewValue * 0.2);
-                onValueChanged((long) e.NewValue, (long) restTimelapseSetter.Value);
+                RestTimelapseSetter.Minimum = Math.Ceiling((double)e.NewValue * 0.2);
+                OnValueChanged((long) e.NewValue, (long) RestTimelapseSetter.Value);
             }
         }
 
         private void restTimelapseSetter_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
         {
-            if (workTimelapseSetter != null && e.NewValue != null)
+            if (WorkTimelapseSetter != null && e.NewValue != null)
             {
-                onValueChanged((long) workTimelapseSetter.Value, (long) e.NewValue);
+                OnValueChanged((long) WorkTimelapseSetter.Value, (long) e.NewValue);
             }
         }
 
-        private void onValueChanged(long workValue, long restValue)
+        private void OnValueChanged(long workValue, long restValue)
         {
             TimerStore.Set(workValue, restValue);
-            if (timerStartButton != null)
-            if (workValue == 0 || restValue == 0) timerStartButton.IsEnabled = false;
-            else timerStartButton.IsEnabled = true;
+            if (TimerStartButton != null)
+            if (workValue == 0 || restValue == 0) TimerStartButton.IsEnabled = false;
+            else TimerStartButton.IsEnabled = true;
+        }
+
+        private void NavAuthorButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            AboutFlyout.IsOpen = !AboutFlyout.IsOpen;
         }
     }
 }

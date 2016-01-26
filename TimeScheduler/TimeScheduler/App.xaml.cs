@@ -6,19 +6,13 @@ using System.Windows;
 
 namespace TimeScheduler
 { 
-    public partial class App : Application
+    public partial class App
     {
 
-        private static List<CultureInfo> _languages = new List<CultureInfo>();
+        private static readonly List<CultureInfo> _languages = new List<CultureInfo>();
         public static event EventHandler LanguageChanged;
 
-        public static List<CultureInfo> Languages
-        {
-            get
-            {
-                return _languages;
-            }
-        }
+        public static List<CultureInfo> Languages => _languages;
 
         public static CultureInfo Language
         {
@@ -38,28 +32,28 @@ namespace TimeScheduler
                 switch (value.Name)
                 {
                     case "ru-RU":
-                        dict.Source = new Uri(String.Format("Resources/lang.{0}.xaml", value.Name), UriKind.Relative);
+                        dict.Source = new Uri($"Resources/lang.{value.Name}.xaml", UriKind.Relative);
                         break;
                     default:
                         dict.Source = new Uri("Resources/lang.xaml", UriKind.Relative);
                         break;
                 }
 
-                ResourceDictionary oldDict = (from d in Application.Current.Resources.MergedDictionaries
+                ResourceDictionary oldDict = (from d in Current.Resources.MergedDictionaries
                                               where d.Source != null && d.Source.OriginalString.StartsWith("Resources/lang.")
                                               select d).First();
                 if (oldDict != null)
                 {
-                    int ind = Application.Current.Resources.MergedDictionaries.IndexOf(oldDict);
-                    Application.Current.Resources.MergedDictionaries.Remove(oldDict);
-                    Application.Current.Resources.MergedDictionaries.Insert(ind, dict);
+                    int ind = Current.Resources.MergedDictionaries.IndexOf(oldDict);
+                    Current.Resources.MergedDictionaries.Remove(oldDict);
+                    Current.Resources.MergedDictionaries.Insert(ind, dict);
                 }
                 else
                 {
-                    Application.Current.Resources.MergedDictionaries.Add(dict);
+                    Current.Resources.MergedDictionaries.Add(dict);
                 }
 
-                LanguageChanged(Application.Current, new EventArgs());
+                LanguageChanged(Current, new EventArgs());
             }
         }
 
@@ -67,7 +61,7 @@ namespace TimeScheduler
             _languages.Clear();
             _languages.Add(new CultureInfo("en-US"));
             _languages.Add(new CultureInfo("ru-RU"));
-            App.LanguageChanged += App_LanguageChanged;
+            LanguageChanged += App_LanguageChanged;
         }
 
         private void Application_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)

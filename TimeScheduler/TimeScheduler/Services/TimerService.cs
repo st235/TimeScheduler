@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Threading;
 
 namespace TimeScheduler.Services
@@ -10,22 +6,22 @@ namespace TimeScheduler.Services
     public class TimerService
     {
 
-        private int TICK_INTERVAL = 1;
-        private long TIMELAPSE;
+        private int _tickInterval = 1;
+        private long _timelapse;
 
         public delegate void OnTickEventHandler(long time, long tick);
-        private event OnTickEventHandler onTickEvent;
+        private event OnTickEventHandler OnTickEvent;
 
         public delegate void OnRestartEventHandler();
-        private event OnRestartEventHandler onRestartEvent;
+        private event OnRestartEventHandler OnRestartEvent;
 
-        private DispatcherTimer _timer;
+        private readonly DispatcherTimer _timer;
         private long _currentTime;
 
         public long Timelapse
         { 
-            get { return TIMELAPSE;  }
-            set { TIMELAPSE = value; }
+            get { return _timelapse;  }
+            set { _timelapse = value; }
          }
 
          public long CurrentTime
@@ -37,26 +33,26 @@ namespace TimeScheduler.Services
         public TimerService()
         {
             _timer = new DispatcherTimer();
-            _timer.Tick += new EventHandler(onTick);
+            _timer.Tick += OnTick;
         }
 
         public void Add(OnTickEventHandler onTickMethod, OnRestartEventHandler onRestartMethod)
         {
-            onTickEvent += onTickMethod;
-            onRestartEvent += onRestartMethod;
+            OnTickEvent += onTickMethod;
+            OnRestartEvent += onRestartMethod;
         }
 
 
         public void Set(long timelapse, int tickInterval)
         {
-            TIMELAPSE = timelapse;
-            TICK_INTERVAL = tickInterval;
-            _timer.Interval = new TimeSpan(0, 0, TICK_INTERVAL);
+            _timelapse = timelapse;
+            _tickInterval = tickInterval;
+            _timer.Interval = new TimeSpan(0, 0, _tickInterval);
         }
 
         public void Start()
         {
-            onStart();
+            OnStart();
             _timer.Start();
         }
 
@@ -65,21 +61,21 @@ namespace TimeScheduler.Services
             _timer.Stop();
         }
 
-        private void onStart()
+        private void OnStart()
         {
             _currentTime = 0;
         }
 
-        private void onTick(object sender, object e)
+        private void OnTick(object sender, object e)
         {
-            _currentTime += TICK_INTERVAL;
-            if (_currentTime >= TIMELAPSE + TICK_INTERVAL) onEnd();
-            onTickEvent(this.Timelapse, this.CurrentTime);
+            _currentTime += _tickInterval;
+            if (_currentTime >= _timelapse + _tickInterval) OnEnd();
+            OnTickEvent(this.Timelapse, this.CurrentTime);
         }
 
-        private void onEnd()
+        private void OnEnd()
         {
-            onRestartEvent();
+            OnRestartEvent();
             _currentTime = 0;
         }
     }
