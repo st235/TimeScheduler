@@ -4,6 +4,7 @@ using System.Windows;
 using MahApps.Metro.Controls;
 using TimeScheduler.Services;
 using TimeScheduler.Stores;
+using TimeScheduler.Utils;
 
 namespace TimeScheduler
 {
@@ -43,6 +44,8 @@ namespace TimeScheduler
         public void OnTimerTick(long allTime, long currentTime)
         {
             TimerTickProgress.Value = currentTime;
+            ElapsedTimeTile.Count = TimeConverter.FromSeconds(currentTime);
+            LeftTimeTile.Count = TimeConverter.FromSeconds(allTime - currentTime);
         }
 
         public void OnTimerRestart()
@@ -77,7 +80,7 @@ namespace TimeScheduler
             else TimerStartButton.IsEnabled = true;
         }
 
-        private void NavAuthorButton_OnClick(object sender, RoutedEventArgs e)
+        private void NavAboutButton_OnClick(object sender, RoutedEventArgs e)
         {
             AboutFlyout.IsOpen = !AboutFlyout.IsOpen;
         }

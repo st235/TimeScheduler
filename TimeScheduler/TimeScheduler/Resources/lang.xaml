@@ -16,10 +16,28 @@
     <!-- Endregion -->
 
     <!-- Region App Controls -->
+    <v:String x:Key="ControlDisableKeyboard">Disable keyboard while rest</v:String>
     <v:String x:Key="ControlStart">Start</v:String>
     <!-- Endregion -->
 
     <!-- Region Author Flyout -->
     <v:String x:Key="AboutFloyoutHeader">About "Time Scheduler"</v:String>
+    <!-- Endregion -->
+
+    <!-- Region Tabs --> 
+    <v:String x:Key="TabTimerTitle">Timer</v:String>
+    <v:String x:Key="TabActivityTitle">Activity</v:String>
+    <!-- Endregion -->
+
+    <!-- Region Timer Tab -->
+    <v:String x:Key="ElapsedTime">Elapsed Time</v:String>
+    <v:String x:Key="LeftTime">Left Time</v:String>
+    <v:String x:Key="TimePlaceholder">Start the timer!</v:String>
+    <!-- Endregion -->
+
+    <!-- Region Activity Tab -->
+    <v:String x:Key="ColumnData">Data</v:String>
+    <v:String x:Key="ColumnTime">Time</v:String>
+    <v:String x:Key="ColumnType">Type</v:String>
     <!-- Endregion -->
 </ResourceDictionary>

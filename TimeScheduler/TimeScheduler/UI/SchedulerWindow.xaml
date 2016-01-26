@@ -12,7 +12,7 @@
 
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands ShowLastSeparator="True" Foreground="White" Background="{x:Null}">
-            <Button Name="NavAuthorButton" Content="{DynamicResource NavigationAbout}" Click="NavAuthorButton_OnClick" Foreground="White" />
+            <Button Name="NavAboutButton" Content="{DynamicResource NavigationAbout}" Click="NavAboutButton_OnClick" Foreground="White" />
             <controls:DropDownButton Name="NavLanguageSelector" Content="{DynamicResource NavigationLanguges}" ArrowVisibility="Collapsed" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" />
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
@@ -34,7 +34,38 @@
                 <ColumnDefinition Width="3*"/>
             </Grid.ColumnDefinitions>
 
-            <controls:NumericUpDown Name="WorkTimelapseSetter" Interval="5" Minimum="0" Value="0" Maximum="80" ValueChanged="workTimelapseSetter_ValueChanged" StringFormat="N0" VerticalAlignment="Top" Margin="5,50,5,0" Grid.ColumnSpan="3" Height="30" FontSize="16"/>
+            <TabControl Grid.Column="3" Margin="0">
+                <TabItem Header="{StaticResource TabTimerTitle}">
+                    <controls:MetroContentControl>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <controls:Tile Name="ElapsedTimeTile" Title="{StaticResource ElapsedTime}" TiltFactor="2" Width="Auto" Height="Auto" Count="{StaticResource TimePlaceholder}" Margin="5" />
+                            <controls:Tile Name="LeftTimeTile" Title="{StaticResource LeftTime}" TiltFactor="2" Width="Auto" Height="Auto" Count="{StaticResource TimePlaceholder}" Margin="5" Grid.Row="1" />
+                        </Grid>
+                    </controls:MetroContentControl>
+                </TabItem>
+                <TabItem Header="{StaticResource TabActivityTitle}">
+                    <controls:MetroContentControl>
+                        <Grid>
+                            <Grid>
+                                <DataGrid Margin="0">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="{StaticResource ColumnData}"/>
+                                        <DataGridTextColumn Header="{StaticResource ColumnTime}"/>
+                                        <DataGridTextColumn Header="{StaticResource ColumnType}"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+                        </Grid>
+                    </controls:MetroContentControl>
+                </TabItem>
+            </TabControl>
+
+            <controls:NumericUpDown Name="WorkTimelapseSetter" Interval="5" Minimum="0" Value="0" Maximum="80" ValueChanged="workTimelapseSetter_ValueChanged" StringFormat="N0" VerticalAlignment="Top" Margin="5,50,5,0" Grid.ColumnSpan="3"
+                                    Grid.Column="0" Height="30" FontSize="16"/>
             <controls:NumericUpDown Grid.Column="0" Name="RestTimelapseSetter" Interval="5" Minimum="0" Value="0" Maximum="80" ValueChanged="restTimelapseSetter_ValueChanged" StringFormat="N0" VerticalAlignment="Top" Margin="5,130,5,0" Grid.ColumnSpan="3" Height="30" FontSize="16"/>
             <controls:MetroProgressBar Name="TimerTickProgress" Foreground="{DynamicResource AccentColorBrush}" Grid.ColumnSpan="4"
                                        Grid.Column="0" Margin="0,0,0,-3" VerticalAlignment="Bottom" />
@@ -43,6 +74,7 @@
                    Grid.Column="0" FontSize="20"/>
             <Label Content="{DynamicResource InfoRestText}" Foreground="{DynamicResource AccentColorBrush}" Margin="5,90,5,0" VerticalAlignment="Top" Grid.ColumnSpan="3"
                    Grid.Column="0" FontSize="20"/>
+            <controls:ToggleSwitch Header="{StaticResource ControlDisableKeyboard}" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="5,170,5,0" />
         </Grid>
     </controls:MetroContentControl>
 </controls:MetroWindow>
