@@ -1,8 +1,47 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:TimeScheduler.Resources"
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
 
     <v:String x:Key="AppTitle">Расписание</v:String>
+    <v:String x:Key="AppLanguages">Языки</v:String>
+
+    <!-- Region App Info Text -->
+    <v:String x:Key="InfoWorkText">Установи рабочее время</v:String>
+    <v:String x:Key="InfoRestText">Установи время отдыха</v:String>
+    <!-- Endregion -->
+
+    <!-- Region App Navigation -->
+    <v:String x:Key="NavigationLanguges">Языки</v:String>
+    <v:String x:Key="NavigationAbout">О приложении</v:String>
+    <!-- Endregion -->
+
+    <!-- Region App Controls -->
+    <v:String x:Key="ControlDisableKeyboard">Отключать клавиатуру во врем отдыха</v:String>
+    <v:String x:Key="ControlStart">Старт</v:String>
+    <v:String x:Key="ControlStop">Стоп</v:String>
+    <v:String x:Key="ControlPause">Пауза</v:String>
+    <v:String x:Key="ControlResume">Продолжить</v:String>
+    <!-- Endregion -->
+
+    <!-- Region Author Flyout -->
+    <v:String x:Key="AboutFloyoutHeader">О приложении "Time Scheduler"</v:String>
+    <!-- Endregion -->
+
+    <!-- Region Tabs -->
+    <v:String x:Key="TabTimerTitle">Таймер</v:String>
+    <v:String x:Key="TabActivityTitle">Активность</v:String>
+    <!-- Endregion -->
+
+    <!-- Region Timer Tab -->
+    <v:String x:Key="ElapsedTime">Прошло</v:String>
+    <v:String x:Key="LeftTime">Осталось</v:String>
+    <v:String x:Key="TimePlaceholder">Таймер выключен!</v:String>
+    <!-- Endregion -->
+
+    <!-- Region Activity Tab -->
+    <v:String x:Key="ColumnData">Дата</v:String>
+    <v:String x:Key="ColumnTime">Время</v:String>
+    <v:String x:Key="ColumnType">Тип</v:String>
+    <!-- Endregion -->
 
 </ResourceDictionary>

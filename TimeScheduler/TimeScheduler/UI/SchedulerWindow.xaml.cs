@@ -1,6 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using TimeScheduler.Services;
 using TimeScheduler.Stores;
@@ -18,20 +22,57 @@ namespace TimeScheduler
         public MainWindow()
         {
             InitializeComponent();
+            InitLanguage();
             BaseStatesStore.Init(_defaultWorkState);
             _timerService = new TimerService();
             _timerService.Add(OnTimerTick, OnTimerRestart);
-            Init();
-    }
+        }
 
-        private void Init()
+        private void InitLanguage()
         {
-            ObservableCollection<string> list = new ObservableCollection<string>();
+            CultureInfo currentLanguage = App.Language;
+            App.Language = currentLanguage;
+
+            App.LanguageChanged += LanguageChanged;
+
+            NavLanguageSelector.Items.Clear();
             foreach (var lang in App.Languages)
             {
-                list.Add(lang.DisplayName);
+                var item = new MenuItem
+                {
+                    Header = lang.DisplayName,
+                    Tag = lang,
+                    IsChecked = lang.Equals(currentLanguage)
+                };
+
+                item.Click += NavLanguageSelector_Selected;
+
+                NavLanguageSelector.Items.Add(item);
             }
-            NavLanguageSelector.ItemsSource = list;
+        }
+
+        private void NavLanguageSelector_Selected(object sender, EventArgs e)
+        {
+            MenuItem mi = sender as MenuItem;
+            if (mi != null)
+            {
+                CultureInfo lang = mi.Tag as CultureInfo;
+                if (lang != null)
+                {
+                    App.Language = lang;
+                }
+            }
+        }
+
+        private void LanguageChanged(Object sender, EventArgs e)
+        {
+            CultureInfo currLang = App.Language;
+
+            foreach (MenuItem i in NavLanguageSelector.Items)
+            {
+                CultureInfo ci = i.Tag as CultureInfo;
+                i.IsChecked = ci != null && ci.Equals(currLang);
+            }
         }
 
         private void OnStart(object sender, RoutedEventArgs e)

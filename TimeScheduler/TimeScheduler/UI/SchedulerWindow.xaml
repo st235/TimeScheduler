@@ -13,7 +13,9 @@
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands ShowLastSeparator="True" Foreground="White" Background="{x:Null}">
             <Button Name="NavAboutButton" Content="{DynamicResource NavigationAbout}" Click="NavAboutButton_OnClick" Foreground="White" />
-            <controls:DropDownButton Name="NavLanguageSelector" Content="{DynamicResource NavigationLanguges}" ArrowVisibility="Collapsed" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="White" />
+            <Menu Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{x:Null}" >
+                <MenuItem Name="NavLanguageSelector" Header="{DynamicResource AppLanguages}" Foreground="White" Background="{x:Null}" />
+            </Menu>
         </controls:WindowCommands>
     </controls:MetroWindow.RightWindowCommands>
 
@@ -35,27 +37,27 @@
             </Grid.ColumnDefinitions>
 
             <TabControl Grid.Column="3" Margin="0">
-                <TabItem Header="{StaticResource TabTimerTitle}">
+                <TabItem Header="{DynamicResource TabTimerTitle}">
                     <controls:MetroContentControl>
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <controls:Tile Name="ElapsedTimeTile" Title="{StaticResource ElapsedTime}" TiltFactor="2" Width="Auto" Height="Auto" Count="{StaticResource TimePlaceholder}" Margin="5" />
-                            <controls:Tile Name="LeftTimeTile" Title="{StaticResource LeftTime}" TiltFactor="2" Width="Auto" Height="Auto" Count="{StaticResource TimePlaceholder}" Margin="5" Grid.Row="1" />
+                            <controls:Tile Name="ElapsedTimeTile" Title="{DynamicResource ElapsedTime}" TiltFactor="2" Width="Auto" Height="Auto" Count="{DynamicResource TimePlaceholder}" Margin="5" />
+                            <controls:Tile Name="LeftTimeTile" Title="{DynamicResource LeftTime}" TiltFactor="2" Width="Auto" Height="Auto" Count="{DynamicResource TimePlaceholder}" Margin="5" Grid.Row="1" />
                         </Grid>
                     </controls:MetroContentControl>
                 </TabItem>
-                <TabItem Header="{StaticResource TabActivityTitle}">
+                <TabItem Header="{DynamicResource TabActivityTitle}">
                     <controls:MetroContentControl>
                         <Grid>
                             <Grid>
                                 <DataGrid Margin="0">
                                     <DataGrid.Columns>
-                                        <DataGridTextColumn Header="{StaticResource ColumnData}"/>
-                                        <DataGridTextColumn Header="{StaticResource ColumnTime}"/>
-                                        <DataGridTextColumn Header="{StaticResource ColumnType}"/>
+                                        <DataGridTextColumn Header="{DynamicResource ColumnData}"/>
+                                        <DataGridTextColumn Header="{DynamicResource ColumnTime}"/>
+                                        <DataGridTextColumn Header="{DynamicResource ColumnType}"/>
                                     </DataGrid.Columns>
                                 </DataGrid>
                             </Grid>
@@ -74,7 +76,9 @@
                    Grid.Column="0" FontSize="20"/>
             <Label Content="{DynamicResource InfoRestText}" Foreground="{DynamicResource AccentColorBrush}" Margin="5,90,5,0" VerticalAlignment="Top" Grid.ColumnSpan="3"
                    Grid.Column="0" FontSize="20"/>
-            <controls:ToggleSwitch Header="{StaticResource ControlDisableKeyboard}" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="5,170,5,0" />
+            <controls:ToggleSwitch Header="{DynamicResource ControlDisableKeyboard}" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="5,170,5,0" />
+            <Button x:Name="TimerStopButton" Content="{DynamicResource ControlStop}" Click="OnStart" IsEnabled="False" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5,0,5,10" VerticalAlignment="Bottom" Width="75" Grid.Column="2"/>
+            <Button x:Name="TimerStartButton_Copy1" Content="{DynamicResource ControlStart}" Click="OnStart" IsEnabled="False" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5,0,5,10" VerticalAlignment="Bottom" Width="75"/>
         </Grid>
     </controls:MetroContentControl>
 </controls:MetroWindow>
