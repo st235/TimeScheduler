@@ -16,7 +16,9 @@
     <!-- Endregion -->
 
     <!-- Region App Controls -->
-    <v:String x:Key="ControlDisableKeyboard">Disable keyboard while rest</v:String>
+    <v:String x:Key="ControlEnableNotification">Enable notifictions</v:String>
+    <v:String x:Key="ControlEnableNotification_Enabled">Enabled</v:String>
+    <v:String x:Key="ControlEnableNotification_Disabled">Disabled</v:String>
     <v:String x:Key="ControlStart">Start</v:String>
     <v:String x:Key="ControlStop">Stop</v:String>
     <v:String x:Key="ControlPause">Pause</v:String>

@@ -8,6 +8,7 @@ namespace TimeScheduler.UI.Base
 {
     public class BaseWindow : MetroWindow
     {
+        private event Action OnLanguageChanged;  
 
         private MenuItem Menu { get; set; }
 
@@ -15,6 +16,11 @@ namespace TimeScheduler.UI.Base
         {
             Menu = menu;
             InitLanguage();
+        }
+
+        protected void AddLanguageChangedEvent(Action onLanguageChanged)
+        {
+            OnLanguageChanged += onLanguageChanged;
         }
 
         private void InitLanguage()
@@ -43,6 +49,8 @@ namespace TimeScheduler.UI.Base
                 CultureInfo ci = item.Tag as CultureInfo;
                 item.IsChecked = ci != null && ci.Equals(currLang);
             }
+
+            OnLanguageChanged?.Invoke();
         }
 
         private void Menu_Selected(object sender, EventArgs e)

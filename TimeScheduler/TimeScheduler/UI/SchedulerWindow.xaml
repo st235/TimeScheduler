@@ -53,15 +53,7 @@
                 <TabItem Header="{DynamicResource TabActivityTitle}">
                     <controls:MetroContentControl>
                         <Grid>
-                            <Grid>
-                                <DataGrid Margin="0">
-                                    <DataGrid.Columns>
-                                        <DataGridTextColumn Header="{DynamicResource ColumnData}"/>
-                                        <DataGridTextColumn Header="{DynamicResource ColumnTime}"/>
-                                        <DataGridTextColumn Header="{DynamicResource ColumnType}"/>
-                                    </DataGrid.Columns>
-                                </DataGrid>
-                            </Grid>
+                            <DataGrid Name="ActivityDataGrid"  Margin="0" />
                         </Grid>
                     </controls:MetroContentControl>
                 </TabItem>
@@ -77,10 +69,10 @@
                    Grid.Column="0" FontSize="20"/>
             <Label Content="{DynamicResource InfoRestText}" Foreground="{DynamicResource AccentColorBrush}" Margin="5,90,5,0" VerticalAlignment="Top" Grid.ColumnSpan="3"
                    Grid.Column="0" FontSize="20"/>
-            <controls:ToggleSwitch Header="{DynamicResource ControlDisableKeyboard}" VerticalAlignment="Top" Grid.ColumnSpan="3"
-                                   Grid.Column="0" Margin="5,170,5,0" />
-            <Button x:Name="TimerStopButton" Content="{DynamicResource ControlStop}" Click="OnTimerStart" IsEnabled="False" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5,0,5,10" VerticalAlignment="Bottom" Width="75" Grid.Column="2"/>
-            <Button Grid.Column="0" x:Name="TimerSopButton" Content="{DynamicResource ControlStart}" Click="OnTimerStop"  IsEnabled="True" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5,0,5,10" VerticalAlignment="Bottom" Width="75"/>
+            <controls:ToggleSwitch Header="{DynamicResource ControlEnableNotification}" OnLabel="{DynamicResource ControlEnableNotification_Enabled}"  OffLabel="{DynamicResource ControlEnableNotification_Disabled}"
+             VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Column="0" Margin="5,170,5,0" IsChecked="True" />
+            <Button x:Name="TimerPauseButton" Content="{DynamicResource ControlPause}" Click="OnTimerPause" IsEnabled="False" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5,0,5,10" VerticalAlignment="Bottom" Width="75" Grid.Column="2"/>
+            <Button Grid.Column="0" x:Name="TimerStopButton" Content="{DynamicResource ControlStop}" Click="OnTimerStop"  IsEnabled="False" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5,0,5,10" VerticalAlignment="Bottom" Width="75"/>
         </Grid>
     </controls:MetroContentControl>
 </base:BaseWindow>

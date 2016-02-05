@@ -16,7 +16,9 @@
     <!-- Endregion -->
 
     <!-- Region App Controls -->
-    <v:String x:Key="ControlDisableKeyboard">Отключать клавиатуру во врем отдыха</v:String>
+    <v:String x:Key="ControlEnableNotification">Включить уведомления</v:String>
+    <v:String x:Key="ControlEnableNotification_Enabled">Включено</v:String>
+    <v:String x:Key="ControlEnableNotification_Disabled">Выключено</v:String>
     <v:String x:Key="ControlStart">Старт</v:String>
     <v:String x:Key="ControlStop">Стоп</v:String>
     <v:String x:Key="ControlPause">Пауза</v:String>

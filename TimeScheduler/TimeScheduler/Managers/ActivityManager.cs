@@ -28,7 +28,7 @@ namespace TimeScheduler.Managers
         public static async void ToList(Action<List<ActivityModel>> onComplete)
         {
             var list = await DbContext.Activities.ToListAsync();
-            onComplete(list);
+            if (list != null) onComplete(list);
         }
     }
 }

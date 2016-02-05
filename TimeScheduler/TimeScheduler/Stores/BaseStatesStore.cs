@@ -1,10 +1,8 @@
 ﻿namespace TimeScheduler.Stores
 {
-    public class BaseStatesStore
+    public static class BaseStatesStore
     {
-        private BaseStatesStore() { }
-
-        public static bool IsWork { get; set; } = false;
+        public static bool IsWork { get; set; }
 
         public static void Init(bool isWork)
         {

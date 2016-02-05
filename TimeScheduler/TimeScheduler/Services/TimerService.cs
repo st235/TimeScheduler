@@ -52,7 +52,6 @@ namespace TimeScheduler.Services
 
         public void Start()
         {
-            OnStart();
             _timer.Start();
         }
 
@@ -61,7 +60,7 @@ namespace TimeScheduler.Services
             _timer.Stop();
         }
 
-        private void OnStart()
+        private void OnRestart()
         {
             _currentTime = 0;
         }
@@ -70,12 +69,13 @@ namespace TimeScheduler.Services
         {
             _currentTime += _tickInterval;
             if (_currentTime >= _timelapse + _tickInterval) OnEnd();
-            OnTickEvent(this.Timelapse, this.CurrentTime);
+            OnTickEvent?.Invoke(this.Timelapse, this.CurrentTime);
         }
 
         private void OnEnd()
         {
-            OnRestartEvent();
+            OnRestart();
+            OnRestartEvent?.Invoke();
             _currentTime = 0;
         }
     }
