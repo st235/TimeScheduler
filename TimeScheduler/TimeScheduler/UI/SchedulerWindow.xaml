@@ -1,9 +1,10 @@
-﻿<controls:MetroWindow x:Class="TimeScheduler.MainWindow"
+﻿<base:BaseWindow x:Class="TimeScheduler.MainWindow"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:base="clr-namespace:TimeScheduler.UI.Base"
         mc:Ignorable="d"
         Title="{DynamicResource AppTitle}"
         Height="350" Width="525"
@@ -71,14 +72,18 @@
             <controls:NumericUpDown Grid.Column="0" Name="RestTimelapseSetter" Interval="5" Minimum="0" Value="0" Maximum="80" ValueChanged="restTimelapseSetter_ValueChanged" StringFormat="N0" VerticalAlignment="Top" Margin="5,130,5,0" Grid.ColumnSpan="3" Height="30" FontSize="16"/>
             <controls:MetroProgressBar Name="TimerTickProgress" Foreground="{DynamicResource AccentColorBrush}" Grid.ColumnSpan="4"
                                        Grid.Column="0" Margin="0,0,0,-3" VerticalAlignment="Bottom" />
-            <Button Name="TimerStartButton" Content="{DynamicResource ControlStart}" Click="OnStart" IsEnabled="False" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5,0,5,10" VerticalAlignment="Bottom" Width="75" Grid.Column="1"/>
+            <Button Name="TimerStartButton" Content="{DynamicResource ControlStart}" Click="OnTimerStart" IsEnabled="False" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5,0,5,10" VerticalAlignment="Bottom" Width="75" Grid.Column="1"/>
             <Label Content="{DynamicResource InfoWorkText}" Foreground="{DynamicResource AccentColorBrush}" Margin="5,10,5,0" VerticalAlignment="Top" Grid.ColumnSpan="3"
                    Grid.Column="0" FontSize="20"/>
             <Label Content="{DynamicResource InfoRestText}" Foreground="{DynamicResource AccentColorBrush}" Margin="5,90,5,0" VerticalAlignment="Top" Grid.ColumnSpan="3"
                    Grid.Column="0" FontSize="20"/>
-            <controls:ToggleSwitch Header="{DynamicResource ControlDisableKeyboard}" VerticalAlignment="Top" Grid.ColumnSpan="3" Margin="5,170,5,0" />
-            <Button x:Name="TimerStopButton" Content="{DynamicResource ControlStop}" Click="OnStart" IsEnabled="False" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5,0,5,10" VerticalAlignment="Bottom" Width="75" Grid.Column="2"/>
-            <Button x:Name="TimerStartButton_Copy1" Content="{DynamicResource ControlStart}" Click="OnStart" IsEnabled="False" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5,0,5,10" VerticalAlignment="Bottom" Width="75"/>
+            <controls:ToggleSwitch Header="{DynamicResource ControlDisableKeyboard}" VerticalAlignment="Top" Grid.ColumnSpan="3"
+                                   Grid.Column="0" Margin="5,170,5,0" />
+            <Button x:Name="TimerStopButton" Content="{DynamicResource ControlStop}" Click="OnTimerStart" IsEnabled="False" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5,0,5,10" VerticalAlignment="Bottom" Width="75" Grid.Column="2"/>
+            <Button Grid.Column="0" x:Name="TimerSopButton" Content="{DynamicResource ControlStart}" Click="OnTimerStop"  IsEnabled="True" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5,0,5,10" VerticalAlignment="Bottom" Width="75"/>
         </Grid>
     </controls:MetroContentControl>
-</controls:MetroWindow>
+</base:BaseWindow>
+
+
+

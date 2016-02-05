@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
+using TimeScheduler.Managers;
 
 namespace TimeScheduler
 { 
@@ -12,6 +13,9 @@ namespace TimeScheduler
         private static readonly String ERROR_EXCEPTION = "Valus is null";
 
         private static List<CultureInfo> _languages = new List<CultureInfo>();
+
+        public static ActivitiesEntity DbContext { get; set; } = null;
+
         public static event EventHandler LanguageChanged;
 
         public static List<CultureInfo> Languages => _languages;
@@ -60,6 +64,7 @@ namespace TimeScheduler
 
         public App() {
             InitLanguage();
+            InitDatabase();
         }
 
         private void InitLanguage()
@@ -68,6 +73,12 @@ namespace TimeScheduler
             _languages.Add(new CultureInfo("en-US"));
             _languages.Add(new CultureInfo("ru-RU"));
             LanguageChanged += App_LanguageChanged;
+        }
+
+        private void InitDatabase()
+        {
+            DbContext = new ActivitiesEntity();
+            ActivityManager.Init(DbContext);
         }
 
         private void Application_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
