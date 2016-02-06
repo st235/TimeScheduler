@@ -59,30 +59,30 @@ namespace TimeScheduler
         {
             TimerValuesStore.Set(workValue, restValue);
             if (TimerStartButton == null) return;
-            if (workValue == 0 || restValue == 0) TimerStatesStore.CurrentState = TimerStatesStore.StateUndefiend;
-            else TimerStatesStore.CurrentState = _timerService.IsActive ? TimerStatesStore.StateWork : TimerStatesStore.StateStop;
+            if (workValue == 0 || restValue == 0) TimerStatesStore.CurrentState = TimerStatesStore.States.Undefiend;
+            else TimerStatesStore.CurrentState = _timerService.IsActive ? TimerStatesStore.States.Work : TimerStatesStore.States.Stop;
         }
 
         public void ButtonVisibilityArea()
         {
             switch (TimerStatesStore.CurrentState)
             {
-                case TimerStatesStore.StateStop:
+                case TimerStatesStore.States.Stop:
                     TimerStopButton.IsEnabled = false;
                     TimerStartButton.IsEnabled = true;
                     TimerPauseButton.IsEnabled = false;
                     break;
-                case TimerStatesStore.StateWork:
+                case TimerStatesStore.States.Work:
                     TimerStopButton.IsEnabled = true;
                     TimerStartButton.IsEnabled = false;
                     TimerPauseButton.IsEnabled = true;
                     break;
-                case TimerStatesStore.StatePause:
+                case TimerStatesStore.States.Pause:
                     TimerStopButton.IsEnabled = false;
                     TimerStartButton.IsEnabled = false;
                     TimerPauseButton.IsEnabled = true;
                     break;
-                case TimerStatesStore.StateResume:
+                case TimerStatesStore.States.Resume:
                     TimerStopButton.IsEnabled = true;
                     TimerStartButton.IsEnabled = false;
                     TimerPauseButton.IsEnabled = true;
@@ -99,7 +99,7 @@ namespace TimeScheduler
         private void OnTimerStart(object sender, RoutedEventArgs e)
         {
             if (_timerService.IsActive) _timerService.Stop();
-            TimerStatesStore.CurrentState = TimerStatesStore.StateWork;
+            TimerStatesStore.CurrentState = TimerStatesStore.States.Work;
             TimerTickProgress.Maximum = TimerValuesStore.Timelapse;
             ActivityDataGrid.AddRow((int)TimerValuesStore.Timelapse, BaseStatesStore.IsWork);
             ActivityManager.Create(TimerValuesStore.Timelapse, BaseStatesStore.IsWork);
@@ -109,7 +109,7 @@ namespace TimeScheduler
 
         private void OnTimerStop(object sender, RoutedEventArgs e)
         {
-            TimerStatesStore.CurrentState = TimerStatesStore.StateStop;
+            TimerStatesStore.CurrentState = TimerStatesStore.States.Stop;
             ElapsedTimeTile.Count = Application.Current.FindResource("StateOff") as string;
             LeftTimeTile.Count = Application.Current.FindResource("StateOff") as string;
             _timerService.Stop();
@@ -117,8 +117,8 @@ namespace TimeScheduler
 
         private void OnTimerPause(object sender, RoutedEventArgs e)
         {
-            if (TimerStatesStore.IsAnotherThan(TimerStatesStore.StateWork, TimerStatesStore.StateResume)) return;
-            TimerStatesStore.CurrentState = TimerStatesStore.StatePause;
+            if (TimerStatesStore.IsAnotherThan(TimerStatesStore.States.Work, TimerStatesStore.States.Resume)) return;
+            TimerStatesStore.CurrentState = TimerStatesStore.States.Pause;
             TimerValuesStore.CurrentTime = _timerService.CurrentTime;
             _timerService.Stop();
             ShowResumeDialog();
@@ -126,8 +126,8 @@ namespace TimeScheduler
 
         private void OnTimerResume()
         {
-            if (TimerStatesStore.IsAnotherThan(TimerStatesStore.StatePause)) return;
-            TimerStatesStore.CurrentState = TimerStatesStore.StateResume;
+            if (TimerStatesStore.IsAnotherThan(TimerStatesStore.States.Pause)) return;
+            TimerStatesStore.CurrentState = TimerStatesStore.States.Resume;
             _timerService.CurrentTime = TimerValuesStore.CurrentTime;
             _timerService.Start();
         }

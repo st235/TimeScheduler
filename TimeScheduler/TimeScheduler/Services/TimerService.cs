@@ -73,6 +73,7 @@ namespace TimeScheduler.Services
         public void Stop()
         {
             _timer.Stop();
+            CurrentTime = 0;
             IsActive = false;
         }
 

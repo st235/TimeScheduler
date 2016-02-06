@@ -7,33 +7,32 @@ namespace TimeScheduler.Stores
     {
         static TimerStatesStore()
         {
-            CurrentState = StateUndefiend;
+            CurrentState = States.Undefiend;
         }
 
-        public const int StateStop = 0;
-        public const int StateWork = 1;
-        public const int StatePause = 2;
-        public const int StateResume = 3;
-        public const int StateUndefiend = 5;
+        public enum States
+        {
+            Stop, Work, Pause, Resume, Undefiend
+        }
 
-        private static int _state = StateStop;
+        private static States _state = States.Stop;
         private static event Action OnStateChanged; 
 
-        public static int CurrentState
+        public static States CurrentState
         {
             get { return _state;  }
             set
             {
                 switch (value)
                 {
-                    case StateStop:
-                    case StateWork:
-                    case StatePause:
-                    case StateResume:
+                    case States.Stop:
+                    case States.Work:
+                    case States.Pause:
+                    case States.Resume:
                         _state = value;
                         break;
                     default:
-                        _state = StateUndefiend;
+                        _state = States.Undefiend;
                         break;
                 }
                 OnStateChanged?.Invoke();
@@ -47,35 +46,35 @@ namespace TimeScheduler.Stores
 
         public static bool IsStopped()
         {
-            return (CurrentState == StateStop) ;
+            return (CurrentState == States.Stop) ;
         }
 
         public static bool IsStarted()
         {
-            return (CurrentState == StateWork);
+            return (CurrentState == States.Work);
         }
 
         public static bool IsPaused()
         {
-            return (CurrentState == StatePause);
+            return (CurrentState == States.Pause);
         }
 
         public static bool IsResumed()
         {
-            return (CurrentState == StateResume);
+            return (CurrentState == States.Resume);
         }
 
         public static bool IsUndefined()
         {
-            return (CurrentState == StateUndefiend);
+            return (CurrentState == States.Undefiend);
         }
 
-        public static bool IsAnother(params int[] states)
+        public static bool IsAnother(params States[] states)
         {
             return states.Any(state => CurrentState == state);
         }
 
-        public static bool IsAnotherThan(params int[] states)
+        public static bool IsAnotherThan(params States[] states)
         {
             return states.All(state => CurrentState != state);
         }
