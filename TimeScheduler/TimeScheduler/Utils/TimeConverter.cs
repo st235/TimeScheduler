@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TimeScheduler.Utils
+﻿namespace TimeScheduler.Utils
 {
     public static class TimeConverter
     {

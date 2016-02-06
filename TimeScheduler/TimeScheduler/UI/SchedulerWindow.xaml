@@ -12,7 +12,7 @@
         ShowIconOnTitleBar="True"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
-        Icon="/TimeScheduler;component/Resources/Icons/LauncherIcon.ico">
+        Icon="../Resources/Icons/LauncherIcon.ico">
 
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands ShowLastSeparator="True" Foreground="White" Background="{x:Null}">
