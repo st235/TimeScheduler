@@ -7,7 +7,7 @@ namespace TimeScheduler.Stores
     {
         static TimerStatesStore()
         {
-            CurrentState = 0;
+            CurrentState = StateUndefiend;
         }
 
         public const int StateStop = 0;

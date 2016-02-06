@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
+using MahApps.Metro.Controls.Dialogs;
 using TimeScheduler.Managers;
 using TimeScheduler.Services;
 using TimeScheduler.Stores;
@@ -24,10 +26,15 @@ namespace TimeScheduler
         private void Init()
         {
             _timerService = new TimerService();
-            _timerService.Add(OnTimerTick, OnTimerRestart);
+            _timerService.Add(OnTimerTick, OnTimerRestart, () =>
+            {
+               // Add change toast
+            });
             BaseStatesStore.Init(DefaultWorkState);
             ActivityDataGrid.FormDataGrid();
             AddLanguageChangedEvent(() => ActivityDataGrid.SetHeaders());
+            ActivityManager.ToList(list =>
+                list.ForEach(activity => ActivityDataGrid.AddRow(activity.Duration, activity.Type)));
             TimerStatesStore.AddStateChangedEvent(ButtonVisibilityArea);
             ButtonVisibilityArea();
         }
@@ -42,6 +49,8 @@ namespace TimeScheduler
         private void OnTimerRestart()
         {
             BaseStatesStore.Revert();
+            ActivityDataGrid.AddRow((int)TimerValuesStore.Timelapse, BaseStatesStore.IsWork);
+            ActivityManager.Create(TimerValuesStore.Timelapse, BaseStatesStore.IsWork);
             _timerService.Set(TimerValuesStore.Timelapse, TimerValuesStore.TickInterval);
             TimerTickProgress.Maximum = TimerValuesStore.Timelapse;
         }
@@ -50,8 +59,8 @@ namespace TimeScheduler
         {
             TimerValuesStore.Set(workValue, restValue);
             if (TimerStartButton == null) return;
-            if (workValue == 0 || restValue == 0) TimerStartButton.IsEnabled = false;
-            else TimerStartButton.IsEnabled = true;
+            if (workValue == 0 || restValue == 0) TimerStatesStore.CurrentState = TimerStatesStore.StateUndefiend;
+            else TimerStatesStore.CurrentState = _timerService.IsActive ? TimerStatesStore.StateWork : TimerStatesStore.StateStop;
         }
 
         public void ButtonVisibilityArea()
@@ -89,9 +98,10 @@ namespace TimeScheduler
 
         private void OnTimerStart(object sender, RoutedEventArgs e)
         {
+            if (_timerService.IsActive) _timerService.Stop();
             TimerStatesStore.CurrentState = TimerStatesStore.StateWork;
             TimerTickProgress.Maximum = TimerValuesStore.Timelapse;
-            ActivityDataGrid.AddRow((int)TimerValuesStore.Timelapse, "WORK");
+            ActivityDataGrid.AddRow((int)TimerValuesStore.Timelapse, BaseStatesStore.IsWork);
             ActivityManager.Create(TimerValuesStore.Timelapse, BaseStatesStore.IsWork);
             _timerService.Set(TimerValuesStore.Timelapse, TimerValuesStore.TickInterval);
             _timerService.Start();
@@ -100,23 +110,33 @@ namespace TimeScheduler
         private void OnTimerStop(object sender, RoutedEventArgs e)
         {
             TimerStatesStore.CurrentState = TimerStatesStore.StateStop;
+            ElapsedTimeTile.Count = Application.Current.FindResource("StateOff") as string;
+            LeftTimeTile.Count = Application.Current.FindResource("StateOff") as string;
             _timerService.Stop();
         }
 
         private void OnTimerPause(object sender, RoutedEventArgs e)
         {
-            if (TimerStatesStore.IsAnotherThan(TimerStatesStore.StateWork, TimerStatesStore.StatePause, TimerStatesStore.StateResume)) return;
-            if (TimerStatesStore.IsPaused())
-            {
-                TimerStatesStore.CurrentState = TimerStatesStore.StateResume;
-                _timerService.CurrentTime = TimerValuesStore.CurrentTime;
-                _timerService.Start();
-            } else if (TimerStatesStore.IsResumed() || TimerStatesStore.IsStarted())
-            {
-                TimerStatesStore.CurrentState = TimerStatesStore.StatePause;
-                TimerValuesStore.CurrentTime = _timerService.CurrentTime;
-                _timerService.Stop();
-            }
+            if (TimerStatesStore.IsAnotherThan(TimerStatesStore.StateWork, TimerStatesStore.StateResume)) return;
+            TimerStatesStore.CurrentState = TimerStatesStore.StatePause;
+            TimerValuesStore.CurrentTime = _timerService.CurrentTime;
+            _timerService.Stop();
+            ShowResumeDialog();
+        }
+
+        private void OnTimerResume()
+        {
+            if (TimerStatesStore.IsAnotherThan(TimerStatesStore.StatePause)) return;
+            TimerStatesStore.CurrentState = TimerStatesStore.StateResume;
+            _timerService.CurrentTime = TimerValuesStore.CurrentTime;
+            _timerService.Start();
+        }
+
+        private async void ShowResumeDialog()
+        {
+            await this.ShowMessageAsync(Application.Current.FindResource("ResumeDialogTitle") as string,
+             Application.Current.FindResource("ResumeDialogBody") as string);
+            OnTimerResume();
         }
 
         private void NavAboutButton_OnClick(object sender, RoutedEventArgs e)
@@ -135,6 +155,16 @@ namespace TimeScheduler
         {
             if (WorkTimelapseSetter == null || e.NewValue == null || WorkTimelapseSetter.Value == null) return;
             OnValueChanged((long) WorkTimelapseSetter.Value, (long) e.NewValue);
+        }
+
+        private void SendMail_OnClick(object sender, RoutedEventArgs e)
+        {
+            Process.Start("mailto:st235@yandex.ru?subject=Time Scheduler Bugs");
+        }
+
+        private void ToggleSwitch_OnIsCheckedChanged(object sender, EventArgs e)
+        {
+            NotificationStatesStore.Revert();
         }
     }
 }

@@ -9,7 +9,10 @@
         Title="{DynamicResource AppTitle}"
         Height="350" Width="525"
         GlowBrush="{DynamicResource AccentColorBrush}"
-        WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+        ShowIconOnTitleBar="True"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="CanMinimize"
+        Icon="/TimeScheduler;component/Resources/Icons/LauncherIcon.ico">
 
     <controls:MetroWindow.RightWindowCommands>
         <controls:WindowCommands ShowLastSeparator="True" Foreground="White" Background="{x:Null}">
@@ -23,7 +26,7 @@
     <controls:MetroWindow.Flyouts>
         <controls:FlyoutsControl>
             <controls:Flyout Name="AboutFlyout" Header="{DynamicResource AboutFloyoutHeader}" Position="Right" Width="400" Theme="Accent">
-                <!-- content here -->
+                <Button x:Name="SendMail" Content="{DynamicResource SendMail}" Click="SendMail_OnClick" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5,0,5,10" VerticalAlignment="Bottom" Width="75"/>
             </controls:Flyout>
         </controls:FlyoutsControl>
     </controls:MetroWindow.Flyouts>
@@ -45,8 +48,8 @@
                                 <RowDefinition/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <controls:Tile Name="ElapsedTimeTile" Title="{DynamicResource ElapsedTime}" TiltFactor="2" Width="Auto" Height="Auto" Count="{DynamicResource TimePlaceholder}" Margin="5" />
-                            <controls:Tile Name="LeftTimeTile" Title="{DynamicResource LeftTime}" TiltFactor="2" Width="Auto" Height="Auto" Count="{DynamicResource TimePlaceholder}" Margin="5" Grid.Row="1" />
+                            <controls:Tile Name="ElapsedTimeTile" Title="{DynamicResource ElapsedTime}" TiltFactor="2" Width="Auto" Height="Auto" Count="{DynamicResource TimePlaceholder}" Margin="5" Grid.Row="1" />
+                            <controls:Tile Name="LeftTimeTile" Grid.Row="0" Title="{DynamicResource LeftTime}" TiltFactor="2" Width="Auto" Height="Auto" Count="{DynamicResource TimePlaceholder}" Margin="5" />
                         </Grid>
                     </controls:MetroContentControl>
                 </TabItem>
@@ -64,12 +67,12 @@
             <controls:NumericUpDown Grid.Column="0" Name="RestTimelapseSetter" Interval="5" Minimum="0" Value="0" Maximum="80" ValueChanged="restTimelapseSetter_ValueChanged" StringFormat="N0" VerticalAlignment="Top" Margin="5,130,5,0" Grid.ColumnSpan="3" Height="30" FontSize="16"/>
             <controls:MetroProgressBar Name="TimerTickProgress" Foreground="{DynamicResource AccentColorBrush}" Grid.ColumnSpan="4"
                                        Grid.Column="0" Margin="0,0,0,-3" VerticalAlignment="Bottom" />
-            <Button Name="TimerStartButton" Content="{DynamicResource ControlStart}" Click="OnTimerStart" IsEnabled="False" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5,0,5,10" VerticalAlignment="Bottom" Width="75" Grid.Column="1"/>
+            <Button Name="TimerStartButton" Content="{DynamicResource ControlStart}" Click="OnTimerStart" IsEnabled="False" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5,0,5,10" VerticalAlignment="Bottom" Width="75" Grid.Column="1" FontWeight="Normal"/>
             <Label Content="{DynamicResource InfoWorkText}" Foreground="{DynamicResource AccentColorBrush}" Margin="5,10,5,0" VerticalAlignment="Top" Grid.ColumnSpan="3"
                    Grid.Column="0" FontSize="20"/>
             <Label Content="{DynamicResource InfoRestText}" Foreground="{DynamicResource AccentColorBrush}" Margin="5,90,5,0" VerticalAlignment="Top" Grid.ColumnSpan="3"
                    Grid.Column="0" FontSize="20"/>
-            <controls:ToggleSwitch Header="{DynamicResource ControlEnableNotification}" OnLabel="{DynamicResource ControlEnableNotification_Enabled}"  OffLabel="{DynamicResource ControlEnableNotification_Disabled}"
+            <controls:ToggleSwitch IsCheckedChanged="ToggleSwitch_OnIsCheckedChanged" Header="{DynamicResource ControlEnableNotification}" OnLabel="{DynamicResource ControlEnableNotification_Enabled}"  OffLabel="{DynamicResource ControlEnableNotification_Disabled}"
              VerticalAlignment="Top" Grid.ColumnSpan="3" Grid.Column="0" Margin="5,170,5,0" IsChecked="True" />
             <Button x:Name="TimerPauseButton" Content="{DynamicResource ControlPause}" Click="OnTimerPause" IsEnabled="False" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5,0,5,10" VerticalAlignment="Bottom" Width="75" Grid.Column="2"/>
             <Button Grid.Column="0" x:Name="TimerStopButton" Content="{DynamicResource ControlStop}" Click="OnTimerStop"  IsEnabled="False" Style="{StaticResource AccentedSquareButtonStyle}" Margin="5,0,5,10" VerticalAlignment="Bottom" Width="75"/>

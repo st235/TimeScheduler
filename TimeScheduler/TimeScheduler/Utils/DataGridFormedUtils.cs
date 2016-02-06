@@ -33,7 +33,12 @@ namespace TimeScheduler.Utils
 
         public static void AddRow(this DataGrid dataGrid, int duration, string type)
         {
-            dataGrid.Items.Add(new ActivityModel { Date = DateTime.Now, Duration = duration, Type = type });
+            dataGrid.Items.Add(new ActivityModel { Date = DateTime.Now, Duration = TimeConverter.ToMinutes(duration), Type = type });
+        }
+
+        public static void AddRow(this DataGrid dataGrid, int duration, bool isWork)
+        {
+            dataGrid.Items.Add(new ActivityModel { Date = DateTime.Now, Duration = TimeConverter.ToMinutes(duration), Type = isWork ? Application.Current.FindResource("StateWork") as string : Application.Current.FindResource("StateRest") as string });
         }
 
         public static void SetHeaders(this DataGrid dataGrid)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Threading;
 
 namespace TimeScheduler.Services
@@ -7,7 +8,6 @@ namespace TimeScheduler.Services
     {
 
         private int _tickInterval = 1;
-        private long _timelapse;
 
         public delegate void OnTickEventHandler(long time, long tick);
         private event OnTickEventHandler OnTickEvent;
@@ -15,8 +15,13 @@ namespace TimeScheduler.Services
         public delegate void OnRestartEventHandler();
         private event OnRestartEventHandler OnRestartEvent;
 
+        private event Action OnLowTimeLeft;
+
         private readonly DispatcherTimer _timer;
         private long _currentTime;
+                private long _timelapse;
+        private int _lowLimmit;
+        public bool IsActive { get; set; }
 
         public long Timelapse
         { 
@@ -42,6 +47,13 @@ namespace TimeScheduler.Services
             OnRestartEvent += onRestartMethod;
         }
 
+        public void Add(OnTickEventHandler onTickMethod, OnRestartEventHandler onRestartMethod, Action onLowTimeLeft)
+        {
+            OnTickEvent += onTickMethod;
+            OnRestartEvent += onRestartMethod;
+            OnLowTimeLeft += onLowTimeLeft;
+        }
+
 
         public void Set(long timelapse, int tickInterval)
         {
@@ -52,12 +64,16 @@ namespace TimeScheduler.Services
 
         public void Start()
         {
+            IsActive = true;
+            _lowLimmit = (int) Math.Ceiling(_timelapse * 0.1);
+            _lowLimmit = _lowLimmit%10 == 0 ? _lowLimmit : _lowLimmit + (10 - _lowLimmit%10);
             _timer.Start();
         }
 
         public void Stop()
         {
             _timer.Stop();
+            IsActive = false;
         }
 
         private void OnRestart()
@@ -69,6 +85,7 @@ namespace TimeScheduler.Services
         {
             _currentTime += _tickInterval;
             if (_currentTime >= _timelapse + _tickInterval) OnEnd();
+            else if (Math.Abs(_currentTime - _timelapse) == _lowLimmit) OnLowTimeLeft?.Invoke();
             OnTickEvent?.Invoke(this.Timelapse, this.CurrentTime);
         }
 

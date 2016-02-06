@@ -5,6 +5,19 @@
     <v:String x:Key="AppTitle">Time Scheduler</v:String>
     <v:String x:Key="AppLanguages">Languages</v:String>
 
+    <!-- Region Toast -->
+    <v:String x:Key="StateChanged">Timer state changed: {0}</v:String>
+    <v:String x:Key="TimerStopped">Timer seccessfully stopped</v:String>
+    <v:String x:Key="TimerLow">Prepare to changing state</v:String>
+    <!-- Endregion -->
+
+    <!-- Region About text -->
+    <v:String x:Key="SendMail">Send mail</v:String>
+    <v:String x:Key="GoToGithub">Go to github</v:String>
+    <v:String x:Key="AboutApplication">1</v:String>
+    <v:String x:Key="AboutAuthor">1</v:String>
+    <!-- Endregion -->
+
     <!-- Region App Info Text -->
     <v:String x:Key="InfoWorkText">Set your work time</v:String>
     <v:String x:Key="InfoRestText">Set your rest time</v:String>
@@ -35,6 +48,10 @@
     <!-- Endregion -->
 
     <!-- Region Timer Tab -->
+    <v:String x:Key="StateWork">Work</v:String>
+    <v:String x:Key="StateRest">Rest</v:String>
+    <v:String x:Key="StateOff">Timer is off</v:String>
+    <v:String x:Key="TimerState">Timer State</v:String>
     <v:String x:Key="ElapsedTime">Elapsed Time</v:String>
     <v:String x:Key="LeftTime">Left Time</v:String>
     <v:String x:Key="TimePlaceholder">Start the timer!</v:String>
@@ -44,5 +61,10 @@
     <v:String x:Key="ColumnData">Data</v:String>
     <v:String x:Key="ColumnTime">Time</v:String>
     <v:String x:Key="ColumnType">Type</v:String>
+    <!-- Endregion -->
+
+    <!-- Region Resume Dialog -->
+    <v:String x:Key="ResumeDialogTitle">Timer on pause</v:String>
+    <v:String x:Key="ResumeDialogBody">To resume timer click 'OK' button</v:String>
     <!-- Endregion -->
 </ResourceDictionary>

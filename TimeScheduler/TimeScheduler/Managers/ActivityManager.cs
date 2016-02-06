@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using System.Windows;
 using TimeScheduler.Models;
+using TimeScheduler.Utils;
 
 namespace TimeScheduler.Managers
 {
@@ -20,7 +22,7 @@ namespace TimeScheduler.Managers
         {
             await Task.Run(() =>
             {
-                DbContext.Activities.Add(entity: new ActivityModel { Date = DateTime.Now, Duration = (int)duration });
+                DbContext.Activities.Add(entity: new ActivityModel { Date = DateTime.Now, Duration = TimeConverter.ToMinutes(duration), Type = isWork ? Application.Current.FindResource("StateWork") as string : Application.Current.FindResource("StateRest") as string });
                 DbContext.SaveChanges();
             });
         }

@@ -15,6 +15,11 @@ namespace TimeScheduler.Utils
             return string.Format(Schema, hours, minutes, seconds);
         }
 
+        public static int ToMinutes(long seconds)
+        {
+            return (int) seconds/60;
+        }
+
         public static long ToSeconds(int hours)
         {
             return hours * 3600;

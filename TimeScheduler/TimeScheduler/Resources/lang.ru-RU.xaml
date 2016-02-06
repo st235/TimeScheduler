@@ -5,6 +5,19 @@
     <v:String x:Key="AppTitle">Расписание</v:String>
     <v:String x:Key="AppLanguages">Языки</v:String>
 
+    <!-- Region Toast -->
+    <v:String x:Key="StateChanged">Timer state changed: {0}</v:String>
+    <v:String x:Key="TimerStopped">Timer seccessfully stopped</v:String>
+    <v:String x:Key="TimerLow">Prepare to changing state</v:String>
+    <!-- Endregion -->
+
+    <!-- Region About text -->
+    <v:String x:Key="SendMail">Отправить письмо</v:String>
+    <v:String x:Key="GoToGithub">На github</v:String>
+    <v:String x:Key="AboutApplication">1</v:String>
+    <v:String x:Key="AboutAuthor">1</v:String>
+    <!-- Endregion -->
+
     <!-- Region App Info Text -->
     <v:String x:Key="InfoWorkText">Установи рабочее время</v:String>
     <v:String x:Key="InfoRestText">Установи время отдыха</v:String>
@@ -16,6 +29,9 @@
     <!-- Endregion -->
 
     <!-- Region App Controls -->
+    <v:String x:Key="StateWork">Работа</v:String>
+    <v:String x:Key="StateRest">Отдых</v:String>
+    <v:String x:Key="StateOff">Остановлено</v:String>
     <v:String x:Key="ControlEnableNotification">Включить уведомления</v:String>
     <v:String x:Key="ControlEnableNotification_Enabled">Включено</v:String>
     <v:String x:Key="ControlEnableNotification_Disabled">Выключено</v:String>
@@ -46,4 +62,8 @@
     <v:String x:Key="ColumnType">Тип</v:String>
     <!-- Endregion -->
 
+    <!-- Region Resume Dialog -->
+    <v:String x:Key="ResumeDialogTitle">Пауза</v:String>
+    <v:String x:Key="ResumeDialogBody">Для возобновления нажмите кнопку 'OK'</v:String>
+    <!-- Endregion -->
 </ResourceDictionary>
