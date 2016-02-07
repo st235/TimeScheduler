@@ -5,6 +5,6 @@ The application created for the organization of working time.
 
 **Dist** - It stores the compiled version.
 
-_Шmportant:_ To avoid bugs, put the latest version.
+_Important:_ To avoid bugs, put the latest version.
 
 **TimeScheduler** - It contains the source code.
