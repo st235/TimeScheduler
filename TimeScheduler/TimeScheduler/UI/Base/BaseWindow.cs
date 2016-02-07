@@ -24,32 +24,34 @@ namespace TimeScheduler.UI.Base
 
         private void InitLanguage()
         {
+            App.Language = Properties.Settings.Default.DefaultLanguage;
             CultureInfo currentLanguage = App.Language;
-            App.Language = currentLanguage;
-
             App.LanguageChanged += LanguageChanged;
+            BuildMenu(currentLanguage);
+        }
 
+        private void LanguageChanged(Object sender, EventArgs e)
+        {
+            CultureInfo currentLanguage = App.Language;
+
+            foreach (MenuItem item in Menu.Items)
+            {
+                CultureInfo cultureInfo = item.Tag as CultureInfo;
+                item.IsChecked = cultureInfo != null && cultureInfo.Equals(currentLanguage);
+            }
+
+            OnLanguageChanged?.Invoke();
+        }
+
+        private void BuildMenu(CultureInfo currentLanguage)
+        {
             Menu.Items.Clear();
-
             foreach (var lang in App.Languages)
             {
                 var item = new MenuItem { Header = lang.DisplayName, Tag = lang, IsChecked = lang.Equals(currentLanguage) };
                 item.Click += Menu_Selected;
                 Menu.Items.Add(item);
             }
-        }
-
-        private void LanguageChanged(Object sender, EventArgs e)
-        {
-            CultureInfo currLang = App.Language;
-
-            foreach (MenuItem item in Menu.Items)
-            {
-                CultureInfo ci = item.Tag as CultureInfo;
-                item.IsChecked = ci != null && ci.Equals(currLang);
-            }
-
-            OnLanguageChanged?.Invoke();
         }
 
         private void Menu_Selected(object sender, EventArgs e)

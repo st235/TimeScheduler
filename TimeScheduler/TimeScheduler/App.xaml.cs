@@ -62,7 +62,9 @@ namespace TimeScheduler
             }
         }
 
-        public App() {
+        public App()
+        {
+
             InitLanguage();
             InitDatabase();
         }
@@ -79,12 +81,6 @@ namespace TimeScheduler
         {
             DbContext = new ActivitiesEntity();
             ActivityManager.Init(DbContext);
-        }
-
-        private void Application_LoadCompleted(object sender, System.Windows.Navigation.NavigationEventArgs e)
-        {
-            Language = TimeScheduler.Properties.Settings.Default.DefaultLanguage;
-            MessageBox.Show(TimeScheduler.Properties.Settings.Default.DefaultLanguage.DisplayName);
         }
 
         private void App_LanguageChanged(Object sender, EventArgs e)

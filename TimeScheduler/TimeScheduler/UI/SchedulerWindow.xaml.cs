@@ -13,6 +13,7 @@ namespace TimeScheduler
     public partial class MainWindow
     {
         private const bool DefaultWorkState = true;
+        private const bool NoConversion = false;
 
         private TimerService _timerService;
 
@@ -34,7 +35,7 @@ namespace TimeScheduler
             ActivityDataGrid.FormDataGrid();
             AddLanguageChangedEvent(() => ActivityDataGrid.SetHeaders());
             ActivityManager.ToList(list =>
-                list.ForEach(activity => ActivityDataGrid.AddRow(activity.Duration, activity.Type)));
+                list.ForEach(activity => ActivityDataGrid.AddRow(activity.Duration, NoConversion, activity.Type)));
             TimerStatesStore.AddStateChangedEvent(ButtonVisibilityArea);
             ButtonVisibilityArea();
         }

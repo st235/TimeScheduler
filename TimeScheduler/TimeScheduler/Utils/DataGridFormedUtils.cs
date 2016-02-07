@@ -35,6 +35,12 @@ namespace TimeScheduler.Utils
         {
             dataGrid.Items.Add(new ActivityModel { Date = DateTime.Now, Duration = TimeConverter.ToMinutes(duration), Type = type });
         }
+    
+        public static void AddRow(this DataGrid dataGrid, int duration, bool isConvert, string type)
+        {
+            if (isConvert) dataGrid.AddRow(duration, type);
+            else dataGrid.Items.Add(new ActivityModel { Date = DateTime.Now, Duration = duration, Type = type });
+        }
 
         public static void AddRow(this DataGrid dataGrid, int duration, bool isWork)
         {
