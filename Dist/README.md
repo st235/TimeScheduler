@@ -1,6 +1,16 @@
 # Time Scheduler Dist
 This folder stores the compiled files
 
+If application does not start install [this](https://msdn.microsoft.com/en-us/mt186501.aspx)
+
+**0.0.1.30 Build**
+
+Release date: 02/13/2016
+
+_Fixed:_
+
+Добавлены зависимости для запуска проекта
+
 **0.0.1.24 Build**
 
 Release date: 02/07/2016
